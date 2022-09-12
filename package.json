@@ -1,0 +1,30 @@
+{
+  "name": "teamprofilegenerator",
+  "version": "1.0.0",
+  "description": "A team profile builder that takes in information about teammates and generates an HTML page displaying the info",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "npx tailwindcss -i ./public/css/style.css -o ./public/css/tailwind.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AMore080/TeamProfileGenerator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AMore080/TeamProfileGenerator/issues"
+  },
+  "homepage": "https://github.com/AMore080/TeamProfileGenerator#readme",
+  "dependencies": {
+    "inquirer": "^9.1.1",
+    "jest": "^29.0.3"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.1.8"
+  }
+}
