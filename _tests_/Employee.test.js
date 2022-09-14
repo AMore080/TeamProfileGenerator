@@ -15,6 +15,10 @@ test("Getting ID from getID() method", () => {
     expect(employee.getID()).toEqual("1234");
 })
 
-test("Getting ID from getEmail() method", () => {
+test("Getting email from getEmail() method", () => {
     expect(employee.getEmail()).toEqual("alexmore050@gmail.com");
+})
+
+test("Getting Role from getRole() method", () => {
+    expect(employee.getRole()).toEqual("Employee");
 })
