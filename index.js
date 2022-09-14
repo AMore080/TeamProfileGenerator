@@ -1,7 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 //require class constructors
-const Employee = require('./public/scripts/Employee');
 const Intern = require('./public/scripts/Intern');
 const Manager = require('./public/scripts/Manager');
 const Engineer = require('./public/scripts/Engineer');
@@ -33,16 +32,7 @@ const questions = async () => {
                 message: "What is your email?",
                 choices: ["Engineer","Intern","Manager"]
             },
-        // {
-        //     type: "input",
-        //     name: "officeNumber",
-        //     message: "What's your office number?"
-        // }
         ])
-        // .then((answers) => {
-        //     console.log(answers);
-        //     team.push(manager);
-        //     console.log(team)
         console.log(answers)
         if(answers.role === "Manager"){
             const managerAnswer = await inquirer
@@ -60,6 +50,57 @@ const questions = async () => {
                     managerAnswer.officeNumber
                 );
                 team.push(newManager);
+            } else if(answers.role === "Engineer"){
+                const engineerRole = await inquirer
+                    .prompt([
+                        {
+                            type: "input",
+                            name: "githubUsername",
+                            message: "What is your github username? (Please enter a valid user)"
+                        }
+                    ])
+                const newEngineer = new Engineer(
+                    answers.name,
+                    answers.employeeID,
+                    answers.email,
+                    engineerRole.githubUsername
+                );
+                team.push(newEngineer)
+            } else if(answers.role === "Intern"){
+                const internRole = await inquirer
+                    .prompt([
+                        {
+                            type: "input",
+                            name: "school",
+                            message: "What school are you enrolled in?"                            
+                        }
+                    ])
+                    const newIntern = new Intern(
+                        answers.name,
+                        answers.employeeID,
+                        answers.email,
+                        internRole.school
+                    )
+                    team.push(newIntern)
+                    console.log(team);
+                    ask();
+            }
+        }
+
+
+        const ask = async () => {
+            const res = await inquirer.prompt([
+                {
+                    type: "confirm",
+                    name: "restart",
+                    message: "Continue?"
+                }
+            ])
+            if(res.restart === 'y' || "Y"){
+                console.log(res.restart)
+                questions();
+            } else {
+                return;
             }
         }
 
