@@ -5,10 +5,13 @@ const Intern = require('./public/scripts/Intern');
 const Manager = require('./public/scripts/Manager');
 const Engineer = require('./public/scripts/Engineer');
 
-const generateHTML = require('./src/generate');
+
+const path = require('path');
+const OUTPUT_DIR = path.resolve(__dirname,"src");
+const outputPath = path.join(OUTPUT_DIR, "output.html");
+const generateHTML = require('./src/generate.js');
 
 const team = [];
-const teamMarkup = "";
 
 //Start questions function with inquirer
 const questions = async () => {
@@ -111,13 +114,16 @@ const questions = async () => {
                 console.log(res.restart)
                 questions();
             } else {
-                console.log(team)
-                markup();
+                // console.log(team)
+                markup(team);
             }
         }
 
-        const markup = async () => {
-                fs.writeFileSync("./src/index.html",generate(team),"utf-8")
+        const markup = (team) => {
+            if (!fs.existsSync(OUTPUT_DIR)){
+                fs.mkdirSync(OUTPUT_DIR)
+            }
+            fs.writeFileSync(outputPath, generateHTML(team), 'utf-8');
         };
 
 
