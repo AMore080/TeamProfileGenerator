@@ -5,7 +5,10 @@ const Intern = require('./public/scripts/Intern');
 const Manager = require('./public/scripts/Manager');
 const Engineer = require('./public/scripts/Engineer');
 
+const generateHTML = require('./src/generate');
+
 const team = [];
+const teamMarkup = "";
 
 //Start questions function with inquirer
 const questions = async () => {
@@ -34,6 +37,7 @@ const questions = async () => {
             },
         ])
         console.log(answers)
+
         if(answers.role === "Manager"){
             const managerAnswer = await inquirer
                 .prompt([
@@ -50,6 +54,10 @@ const questions = async () => {
                     managerAnswer.officeNumber
                 );
                 team.push(newManager);
+                console.log(team);
+                ask();
+
+
             } else if(answers.role === "Engineer"){
                 const engineerRole = await inquirer
                     .prompt([
@@ -65,7 +73,10 @@ const questions = async () => {
                     answers.email,
                     engineerRole.githubUsername
                 );
-                team.push(newEngineer)
+                team.push(newEngineer);
+                console.log(team);
+                ask();
+
             } else if(answers.role === "Intern"){
                 const internRole = await inquirer
                     .prompt([
@@ -96,12 +107,19 @@ const questions = async () => {
                     message: "Continue?"
                 }
             ])
-            if(res.restart === 'y' || "Y"){
+            if(res.restart === true){
                 console.log(res.restart)
                 questions();
             } else {
-                return;
+                console.log(team)
+                markup();
             }
         }
+
+        const markup = async () => {
+                fs.writeFileSync("./src/index.html",generate(team),"utf-8")
+        };
+
+
 
         questions();
